@@ -1,19 +1,22 @@
 #!/bin/bash
-service mysqld start &
-wait
-mysql -uroot -e "CREATE DATABASE otrs;CREATE USER 'otrs'@'localhost' IDENTIFIED BY 'otrs';GRANT ALL PRIVILEGES ON otrs.* TO 'otrs'@'localhost' WITH GRANT OPTION;"&
-wait
-mysql -f -u root otrs < /opt/otrs/scripts/database/otrs-schema.mysql.sql &
-wait
-mysql -f -u root otrs < /opt/otrs/scripts/database/otrs-initial_insert.mysql.sql &
-wait
-/opt/otrs/bin/otrs.SetPassword.pl --agent root@localhost root &
-wait
-/opt/otrs/bin/otrs.RebuildConfig.pl &
-wait
+
+# Initializes the container
+if [ ! -f .initialized ]; then
+	# Checks if we need to create the database 
+	DB=`mysql -h"$MYSQL_PORT_3306_TCP_ADDR" -P"$MYSQL_PORT_3306_TCP_PORT" -uroot -p"$MYSQL_ENV_MYSQL_ROOT_PASSWORD" -B -N -e "SHOW DATABASES LIKE '$DB_NAME';" 2>/dev/null`
+	if [ $DB != "$DB_NAME" ]; then
+		mysql -h"$MYSQL_PORT_3306_TCP_ADDR" -P"$MYSQL_PORT_3306_TCP_PORT" -uroot -p"$MYSQL_ENV_MYSQL_ROOT_PASSWORD" -e "CREATE DATABASE $DB_NAME; CREATE USER 'otrs'@'localhost' IDENTIFIED BY 'otrs'; GRANT ALL PRIVILEGES ON ${DB}.* TO 'otrs'@'localhost' WITH GRANT OPTION;"
+		mysql -h"$MYSQL_PORT_3306_TCP_ADDR" -P"$MYSQL_PORT_3306_TCP_PORT" -uroot -p"$MYSQL_ENV_MYSQL_ROOT_PASSWORD" $DB_NAME < /opt/otrs/scripts/database/otrs-schema.mysql.sql
+		mysql -h"$MYSQL_PORT_3306_TCP_ADDR" -P"$MYSQL_PORT_3306_TCP_PORT" -uroot -p"$MYSQL_ENV_MYSQL_ROOT_PASSWORD" $DB_NAME < /opt/otrs/scripts/database/otrs-initial_insert.mysql.sql
+		/opt/otrs/bin/otrs.SetPassword.pl --agent root@localhost root
+	fi
+
+	# Tasks to execute at every container creation
+	/opt/otrs/bin/otrs.RebuildConfig.pl &
+	touch .initialized
+fi
+
+# Runs services
 /opt/otrs/bin/Cron.sh start otrs &
-wait
 service httpd start
-wait
 service crond start
-exec /usr/sbin/sshd -D
