@@ -21,3 +21,9 @@ fi
 /opt/otrs/bin/Cron.sh start otrs &
 service httpd start
 service crond start
+
+# Stays foreground
+while :
+do
+	sleep 1
+done
