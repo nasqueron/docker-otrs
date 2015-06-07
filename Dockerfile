@@ -10,8 +10,8 @@ MAINTAINER Sébastien Santoro aka Dereckson <dereckson+nasqueron-docker@espace-w
 # Environment (overridable)
 #
 
-OTRS_VERSION=4.0.8-02
-DB_NAME=otrs
+ENV OTRS_VERSION 4.0.8-02
+ENV DB_NAME otrs
 
 #
 # Required software
@@ -32,7 +32,7 @@ RUN rpm -Uvh http://download.fedoraproject.org/pub/epel/6/i386/epel-release-6-8.
                    "perl(Mail::IMAPClient)" "perl(Encode::HanExtra)" \
                    "perl(PDF::API2)" "perl(Text::CSV_XS)" "perl(YAML::XS)" && \
     wget http://ftp.otrs.org/pub/otrs/RPMS/rhel/6/otrs-${OTRS_VERSION}.noarch.rpm && \
-    yum -y install otrs-{$OTRS_VERSION}.noarch.rpm --skip-broken
+    yum -y install otrs-${OTRS_VERSION}.noarch.rpm --skip-broken
 
 #
 # Configuration files
