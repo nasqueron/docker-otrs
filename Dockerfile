@@ -39,11 +39,7 @@ RUN rpm -Uvh http://download.fedoraproject.org/pub/epel/6/i386/epel-release-6-8.
 #
 COPY files /
 RUN sed -i -e"s/mod_perl.c/mod_perl.so/" /etc/httpd/conf.d/zzz_otrs.conf && \
-    sed -i "s/error\/noindex.html/otrs\/index.pl/" /etc/httpd/conf.d/welcome.conf && \
-    chmod +x /*.sh && \
-    cd /opt/otrs/var/cron/ && \
-    /bin/bash -c 'for foo in *.dist; do cp $cronfile `basename $cronfile .dist`; done' && \
-    chown otrs /opt/otrs/var/cron/*
+    sed -i "s/error\/noindex.html/otrs\/index.pl/" /etc/httpd/conf.d/welcome.conf
 
 EXPOSE 80
 CMD ["/bin/bash", "/run.sh"]
