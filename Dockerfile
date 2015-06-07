@@ -27,7 +27,7 @@ RUN rpm -Uvh http://download.fedoraproject.org/pub/epel/6/i386/epel-release-6-8.
                    "perl(LWP::UserAgent)" "perl(Net::DNS)" \
                    "perl(IO::Socket::SSL)" "perl(XML::Parser)" \
                    "perl(YAML::XS)" "perl(Apache2::Reload)" \
-                   "perl(Crypt::Eksblowfish::Bcrypt)" \
+                   "perl(Crypt::Eksblowfish::Bcrypt)" "perl(DBD::mysql)" \
                    "perl(GD::Text)" "perl(GD::Graph)" "perl(JSON::XS)" \
                    "perl(Mail::IMAPClient)" "perl(Encode::HanExtra)" \
                    "perl(PDF::API2)" "perl(Text::CSV_XS)" "perl(YAML::XS)" && \
