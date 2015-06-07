@@ -9,6 +9,7 @@ if [ ! -f .initialized ]; then
 		mysql -h"$MYSQL_PORT_3306_TCP_ADDR" -P"$MYSQL_PORT_3306_TCP_PORT" -uroot -p"$MYSQL_ENV_MYSQL_ROOT_PASSWORD" $DB_NAME < /opt/otrs/scripts/database/otrs-schema.mysql.sql
 		mysql -h"$MYSQL_PORT_3306_TCP_ADDR" -P"$MYSQL_PORT_3306_TCP_PORT" -uroot -p"$MYSQL_ENV_MYSQL_ROOT_PASSWORD" $DB_NAME < /opt/otrs/scripts/database/otrs-initial_insert.mysql.sql
 		/opt/otrs/bin/otrs.SetPassword.pl --agent root@localhost root
+		sed -i "s/%%DATABASE%%/${DB_NAME}/" /opt/otrs/Kernel/Config.pm
 	fi
 
 	# Tasks to execute at every container creation

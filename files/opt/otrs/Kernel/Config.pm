@@ -30,10 +30,10 @@ sub Load {
     # ---------------------------------------------------- #
 
     # The database host
-    $Self->{DatabaseHost} = '127.0.0.1';
+    $Self->{DatabaseHost} = 'mysql';
 
     # The database name
-    $Self->{Database} = 'otrs';
+    $Self->{Database} = '%%DATABASE%%';
 
     # The database user
     $Self->{DatabaseUser} = 'otrs';
