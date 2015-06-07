@@ -54,7 +54,7 @@ sub Load {
     $Self->{'Organization'}        = '';
     $Self->{'LogModule'}           = 'Kernel::System::Log::File';
     $Self->{'LogModule::LogFile'}  = '/tmp/otrs.log';
-    $Self->{'DefaultLanguage'}     = 'de';
+    $Self->{'DefaultLanguage'}     = 'en';
     $Self->{'DefaultCharset'}      = 'utf-8';
     $Self->{'AdminEmail'}          = 'root@localhost';
     $Self->{'Package::Timeout'}    = '120';
