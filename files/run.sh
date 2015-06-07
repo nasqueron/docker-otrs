@@ -14,6 +14,7 @@ if [ ! -f .initialized ]; then
 	fi
 
 	# Tasks to execute at every container creation
+	/opt/otrs/bin/otrs.SetPermissions.pl --web-group=apache
 	touch .initialized
 fi
 
