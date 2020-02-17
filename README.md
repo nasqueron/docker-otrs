@@ -1,6 +1,11 @@
 Docker Image for OTRS
 =====================
 
+This image isn't maintained anymore, as we don't currently use OTRS.
+
+It could be worthwhile to note the OTRS authors have developed Zammad
+https://zammad.org/ to offer a new generation ticketing solution.
+
 Features
 --------
 
